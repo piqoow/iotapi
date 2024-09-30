@@ -1,0 +1,26 @@
+{
+  "name": "pgsapi",
+  "version": "1.0.0",
+  "description": "REST API For Get Data From Sensor PGS",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "PGS",
+    "SENSOR"
+  ],
+  "author": "kakasi-dev",
+  "license": "ISC"
+}
