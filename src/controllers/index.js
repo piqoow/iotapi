@@ -13,6 +13,8 @@ const addplus = require('./controller-add-plus')
 const addminus = require('./controller-add-minus')
 const temperature = require('./controller-temperature')
 const tempdata = require('./controller-sensor-temperature')
+const getdataalfabeta = require('./controller-get-data-alfabeta')
+const postdataalfabeta = require('./controller-post-data-alfabeta')
 
 module.exports ={
 	allfloor, //pgs controller
@@ -29,5 +31,7 @@ module.exports ={
 	addplus, //menambah angka tabel plus untuk controller dds
 	addminus, //menambah angka tabel minus untuk controller dds
 	temperature,
-	tempdata 
+	tempdata,
+	getdataalfabeta,
+	postdataalfabeta
 }

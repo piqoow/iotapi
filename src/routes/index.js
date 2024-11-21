@@ -1,5 +1,23 @@
 const router = require('express').Router()
-const { allfloor, floor, floorpgscu, sensor, floortds, sensortds, valueeb, temperature, tempdata, ddsparkee, plusminus, reduceplus, reduceminus, addplus, addminus } = require('../controllers')
+const { 
+    allfloor, 
+    floor, 
+    floorpgscu, 
+    sensor, 
+    floortds, 
+    sensortds, 
+    valueeb, 
+    temperature, 
+    tempdata, 
+    ddsparkee, 
+    plusminus, 
+    reduceplus, 
+    reduceminus, 
+    addplus, 
+    addminus,
+    getdataalfabeta,
+    postdataalfabeta 
+} = require('../controllers')
 
 router.get('/all-floor', allfloor.getAllFloor)
 router.get('/floor/:id', floor.getFloorByID)
@@ -23,5 +41,8 @@ router.post('/log', sensor.addLog)
 
 router.get('/logtds', sensortds.inputLog)
 router.post('/logtds', sensortds.addLog)
+
+router.get('/getdatatransaction/:id', getdataalfabeta.getData)
+router.post('/postdatatransaction', postdataalfabeta.postData)
 
 module.exports = router
