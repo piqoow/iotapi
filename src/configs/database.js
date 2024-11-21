@@ -1,9 +1,9 @@
 module.exports = {
     connectionLimit: 100,
     multipleStatements : true,
-    host    : '110.0.100.135',
-    user    : 'rnd',
+    host    : 'localhost',
+    user    : 'smartpay',
     port    : 3306,
-    password: 'rahasia123',
+    password: 'smartpay@DEV',
     database: 'parking_pgs_1_3'
 }
