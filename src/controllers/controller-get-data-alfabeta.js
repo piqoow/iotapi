@@ -18,8 +18,14 @@ module.exports = {
             }
 
             connection.query(
-                `SELECT id, display_status, visitor_numbers, car_numbers, total_price
-                FROM transaction_data WHERE id = ?`, 
+                `SELECT 
+                id,
+                display_status,
+                visitor_numbers,
+                car_numbers,
+                CONCAT(ROUND(total_price / 1000), 'K') AS total_price
+                FROM 
+                transaction_data td WHERE id = ?`, 
                 [id],
                 function (error, results) {
                     connection.release();
