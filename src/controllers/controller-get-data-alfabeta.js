@@ -23,10 +23,11 @@ module.exports = {
                 display_status,
                 visitor_numbers,
                 car_numbers,
-                CONCAT(ROUND(total_price / 1000), 'K') AS total_price
+                total_price/1000 as total_price
                 FROM 
                 transaction_data td WHERE id = ?`, 
                 [id],
+                // CONCAT(ROUND(total_price / 1000), 'K') AS 
                 function (error, results) {
                     connection.release();
                     if (error) {
@@ -43,24 +44,24 @@ module.exports = {
                 }
             );
 
-            connection.query(
-                `UPDATE transaction_data SET display_status = 0, visitor_numbers = 0, car_numbers = 0, total_price = 0 WHERE id = ?`, 
-                [id],
-                function (updateError, updateResults) {
-                    if (updateError) {
-                        console.error("Update error: ", updateError);
-                        return res.status(500).send({ error: 'Update error' });
-                    }
+            // connection.query(
+            //     `UPDATE transaction_data SET display_status = 0, visitor_numbers = 0, car_numbers = 0, total_price = 0 WHERE id = ?`, 
+            //     [id],
+            //     function (updateError, updateResults) {
+            //         if (updateError) {
+            //             console.error("Update error: ", updateError);
+            //             return res.status(500).send({ error: 'Update error' });
+            //         }
 
-                    // Kirimkan hasil update dan data yang diambil
-                    console.log("Data updated successfully");
-                    return res.send({
-                        message: 'Data updated successfully',
-                        updatedData: data,
-                        updateResults: updateResults
-                    });
-                }
-            );
+            //         // Kirimkan hasil update dan data yang diambil
+            //         console.log("Data updated successfully");
+            //         return res.send({
+            //             message: 'Data updated successfully',
+            //             updatedData: data,
+            //             updateResults: updateResults
+            //         });
+            //     }
+            // );
         });
     },
 };

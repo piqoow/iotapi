@@ -13,8 +13,8 @@ module.exports = {
         let { id, visitor_numbers, car_numbers, total_price } = req.body;
 
         // Validasi jika data yang diperlukan ada
-        if (!id || !visitor_numbers || !car_numbers || !total_price) {
-            return res.status(400).send({ error: 'All fields (id, visitor_numbers, car_numbers, total_price) are required' });
+        if (!id) {
+            return res.status(400).send({ error: 'id field are required' });
         }
 
         pool.getConnection(function (err, connection) {
