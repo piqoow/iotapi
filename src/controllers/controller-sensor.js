@@ -1,7 +1,6 @@
 const database = require("../configs/database");
 const mysql = require('mysql');
 const pool = mysql.createPool(database)
-require('dotenv').config();
 
 pool.on('error', (err) => {
     console.log(err)
@@ -22,8 +21,6 @@ function inputLog(req, res) {
 	                mf.id,
                     mf.used,
                     mf.capacity,
-                    mf.plus,
-                    mf.minus,
                     mss.sensor_type
                 FROM mst_floor mf
                 JOIN mst_sensor mss ON mss.floor_id = mf.id
@@ -44,43 +41,13 @@ function inputLog(req, res) {
 
                             //IF sensor type IN then used + 1
                             let newUsed
-                            let newPlus
-                            let newMinus
                             if (results[i].sensor_type === 'IN') {
                                 if(results[i].used < results[i].capacity){
                                     newUsed = results[i].used + 1
-                                    connection.query(
-                                        `UPDATE mst_floor SET minus = minus + 1 WHERE id = ?`,
-                                        [results[i].id],
-                                        function (updateError, updateResults) {
-                                            connection.release();
-                                            if (updateError) {
-                                                console.error(updateError);
-                                                res.status(500).send({ error: 'Query error during UPDATE' });
-                                                return;
-                                            }
-            
-                                            res.send({ message: 'Data updated successfully' });
-                                        }
-                                    );
                                 }
                             } else {
                                 if(results[i].used > 0){
                                     newUsed = results[i].used - 1
-                                    connection.query(
-                                        `UPDATE mst_floor SET plus = plus + 1 WHERE id = ?`,
-                                        [results[i].id],
-                                        function (updateError, updateResults) {
-                                            connection.release();
-                                            if (updateError) {
-                                                console.error(updateError);
-                                                res.status(500).send({ error: 'Query error during UPDATE' });
-                                                return;
-                                            }
-            
-                                            res.send({ message: 'Data updated successfully' });
-                                        }
-                                    ); 
                                 }
                             }
                             // newUsed = results[0].sensor_type === 'IN' ? (results[0].used + 1) = 'IN' : (results[0].used - 1)
@@ -91,7 +58,6 @@ function inputLog(req, res) {
                             connection.query(
                                 `UPDATE mst_floor set used = ? WHERE id=?;`
                                 , [newUsed, results[i].id],
-                                
                                 function (error, results) {
                                     if (error) throw error;
                                     connection.query(
@@ -121,7 +87,7 @@ function inputLog(req, res) {
                                             success: true,
                                             message: 'OUT | Success input log!',
                                         });
-                                    });
+                                    }); 
                             }
                         }
                     }
