@@ -23,7 +23,10 @@ module.exports = {
                 display_status,
                 visitor_numbers,
                 car_numbers,
-                total_price/1000 as total_price
+                CASE
+                WHEN total_price >= 1000 THEN total_price / 1000
+                ELSE total_price
+                END AS total_price
                 FROM 
                 transaction_data td WHERE id = ?`, 
                 [id],
