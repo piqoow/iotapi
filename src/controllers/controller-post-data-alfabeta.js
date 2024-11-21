@@ -9,10 +9,8 @@ pool.on('error', (err) => {
 module.exports = {
 
     postData(req, res) {
-        // Mengambil data dari body request
         let { id, visitor_numbers, car_numbers, total_price } = req.body;
 
-        // Validasi jika data yang diperlukan ada
         if (!id) {
             return res.status(400).send({ error: 'id field are required' });
         }
@@ -23,11 +21,10 @@ module.exports = {
                 return res.status(500).send({ error: 'Database connection error' });
             }
 
-            // Pertama, kita ambil data berdasarkan id yang ada di body request
             connection.query(
                 `SELECT id, display_status, visitor_numbers, car_numbers, total_price
                 FROM transaction_data WHERE id = ?`,
-                [id], // Menyisipkan id yang diterima dari body request
+                [id],
                 function (selectError, selectResults) {
                     if (selectError) {
                         connection.release();
@@ -35,24 +32,20 @@ module.exports = {
                         return res.status(500).send({ error: 'Select query error' });
                     }
 
-                    // Jika data ditemukan
                     if (selectResults.length > 0) {
-                        // Menampilkan data yang ditemukan
                         console.log("Data retrieved successfully: ", selectResults[0]);
 
-                        // Selanjutnya update data dengan display_status = 1
                         connection.query(
                             `UPDATE transaction_data SET display_status = 1, visitor_numbers = ?, car_numbers = ?, total_price = ? WHERE id = ?`,
-                            [visitor_numbers, car_numbers, total_price, id], // Data yang ingin diupdate
+                            [visitor_numbers, car_numbers, total_price, id],
                             function (updateError, updateResults) {
-                                connection.release(); // Pastikan koneksi dilepaskan setelah query
+                                connection.release();
 
                                 if (updateError) {
                                     console.error("Update query error: ", updateError);
                                     return res.status(500).send({ error: 'Update query error' });
                                 }
 
-                                // Jika update berhasil, kembalikan data yang telah diupdate
                                 console.log("Data updated successfully");
 
                                 return res.send({
@@ -63,7 +56,6 @@ module.exports = {
                             }
                         );
                     } else {
-                        // Jika data tidak ditemukan, kirimkan pesan error
                         connection.release();
                         return res.status(404).send({ error: 'Data not found for the given id' });
                     }
